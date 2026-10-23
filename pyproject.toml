@@ -1,0 +1,49 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "runmon"
+version = "0.0.1"
+description = "Lightweight live monitoring (events, progress, CPU/memory, watchdogs) for long multi-process Python runs"
+readme = "README.md"
+requires-python = ">=3.11"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [
+  { name = "Ramanujan Machine Group", email = "ramanujan.machine@gmail.com" }
+]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+    "psutil",
+]
+
+[project.optional-dependencies]
+# Terminal client for the live run monitor (`runmon watch`); not needed by runs.
+monitor = ["rich"]
+dev = [
+    "runmon[monitor]",  # terminal view tests (`runmon watch`)
+    "pytest>=8.2.0",
+    "pytest-cov>=4.0.0",
+]
+
+[project.scripts]
+runmon = "runmon.__main__:main"
+
+[project.urls]
+Homepage = "https://www.ramanujanmachine.com/"
+Repository = "https://github.com/RamanujanMachine/RD-RunMon"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["runmon*"]
+
+[tool.setuptools.package-data]
+runmon = ["web/*.html"]
+
+[tool.pytest.ini_options]
+python_files = "test_*.py"
+testpaths = ["tests"]
